@@ -1,66 +1,113 @@
-
-let fruits = ['りんご', 'apple', 'バナナ', 'banana'];
-let i = 0;
-
-function front() {
-    i = (i - 2 + fruits.length) % fruits.length;
-    updateDisplay();
-}
-
-function back() {
-    i = (i + 2) % fruits.length;
-    updateDisplay();
-}
-
-function push() {
-    let txt = document.getElementById('txtMemo').value;
-    let txts = document.getElementById('txtMemos').value;
-    if (txt && txts) {
-        fruits.push(txt, txts);
-        alert("追加されました");
-    } else {
-        alert("両方のフィールドに入力してください");
-    }
-}
-
-function updateDisplay() {
-    document.getElementById('id').textContent = fruits[i];
-    setTimeout(() => {
-        document.getElementById('id').textContent = fruits[i + 1];
-    }, 1000);
-}
-
-function h() {
-    let answer = document.quis2.answer.value;
-    if (answer === fruits[i + 1]) {
-        alert("正解！");
-    } else {
-        alert("間違い！");
-    }
-}
-
-
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>英単語学習アプリ</title>
+<meta charset="UTF-8">
+<title>英単語学習アプリ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        header, footer {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+        }
+        main {
+            padding: 20px;
+        }
+        h2 {
+            font-size: 2em;
+            color: #343a40;
+        }
+        input[type="button"] {
+            font-size: 1em;
+            padding: 10px 20px;
+            margin: 5px;
+        }
+        input[type="text"] {
+            font-size: 1em;
+            padding: 10px;
+            margin: 5px;
+        }
+        span#id {
+            font-size: 1.5em;
+            margin: 0 15px;
+            display: inline-block;
+            width: 100px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        #wordList {
+            margin-top: 20px;
+            text-align: left;
+            display: none;
+        }
+    </style>
+    <script>
+        let fruits = ['りんご', 'apple', 'バナナ', 'banana'];
+        let i = 0;
+
+        function front() {
+            i = (i - 2 + fruits.length) % fruits.length;
+            updateDisplay();
+        }
+
+        function back() {
+            i = (i + 2) % fruits.length;
+            updateDisplay();
+        }
+
+        function push() {
+            let txt = document.getElementById('txtMemo').value;
+            let txts = document.getElementById('txtMemos').value;
+            if (txt && txts) {
+                fruits.push(txt, txts);
+                alert("追加されました");
+            } else {
+                alert("両方のフィールドに入力してください");
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById('id').textContent = fruits[i];
+            setTimeout(() => {
+                document.getElementById('id').textContent = fruits[i + 1];
+            }, 1000);
+        }
+
+        function showWordList() {
+            let wordList = document.getElementById('wordList');
+            wordList.innerHTML = '';
+            for (let j = 0; j < fruits.length; j += 2) {
+                wordList.innerHTML += `<p>${fruits[j]} - ${fruits[j + 1]}</p>`;
+            }
+            wordList.style.display = 'block';
+        }
+    </script>
 </head>
 <body>
-    <h2>英単語学習アプリ</h2>
-    <input type="button" value="前" onclick="front()"/>
-    <span id="id">果物</span>
-    <input type="button" value="後" onclick="back()"/>
-    新しい単語を追加（左が日本語、右が英語）<br>
-    <input type="text" id="txtMemo"/>
-    <input type="text" id="txtMemos"/>
-    <input type="button" value="追加" onclick="push()"/><br><br>
-    <form name="quis2">
-        スペルチェック
-        <input type="text" name="answer" id="eigo"/>
-        <input type="button" value="判定" onclick="h()"/>   
-    </form>
-    <script src="app.js"></script>
+    <header>
+        <h1>英単語学習アプリ</h1>
+    </header>
+    <main>
+        <h2>単語を覚えましょう！</h2>
+        <input type="button" value="前" onclick="front()"/>
+        <span id="id">果物</span>
+        <input type="button" value="後" onclick="back()"/><br><br>
+        <p>新しい単語を追加（左が日本語、右が英語）</p>
+        <input type="text" id="txtMemo" placeholder="日本語"/>
+        <input type="text" id="txtMemos" placeholder="英語"/>
+        <input type="button" value="追加" onclick="push()"/><br><br>
+        <input type="button" value="単語リストを表示" onclick="showWordList()"/><br><br>
+        <div id="wordList"></div>
+    </main>
+    <footer>
+        <p>&copy;英単語学習アプリ</p>
+    </footer>
 </body>
 </html>

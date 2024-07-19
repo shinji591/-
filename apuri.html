@@ -1,0 +1,66 @@
+
+let fruits = ['りんご', 'apple', 'バナナ', 'banana'];
+let i = 0;
+
+function front() {
+    i = (i - 2 + fruits.length) % fruits.length;
+    updateDisplay();
+}
+
+function back() {
+    i = (i + 2) % fruits.length;
+    updateDisplay();
+}
+
+function push() {
+    let txt = document.getElementById('txtMemo').value;
+    let txts = document.getElementById('txtMemos').value;
+    if (txt && txts) {
+        fruits.push(txt, txts);
+        alert("追加されました");
+    } else {
+        alert("両方のフィールドに入力してください");
+    }
+}
+
+function updateDisplay() {
+    document.getElementById('id').textContent = fruits[i];
+    setTimeout(() => {
+        document.getElementById('id').textContent = fruits[i + 1];
+    }, 1000);
+}
+
+function h() {
+    let answer = document.quis2.answer.value;
+    if (answer === fruits[i + 1]) {
+        alert("正解！");
+    } else {
+        alert("間違い！");
+    }
+}
+
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>英単語学習アプリ</title>
+</head>
+<body>
+    <h2>英単語学習アプリ</h2>
+    <input type="button" value="前" onclick="front()"/>
+    <span id="id">果物</span>
+    <input type="button" value="後" onclick="back()"/>
+    新しい単語を追加（左が日本語、右が英語）<br>
+    <input type="text" id="txtMemo"/>
+    <input type="text" id="txtMemos"/>
+    <input type="button" value="追加" onclick="push()"/><br><br>
+    <form name="quis2">
+        スペルチェック
+        <input type="text" name="answer" id="eigo"/>
+        <input type="button" value="判定" onclick="h()"/>   
+    </form>
+    <script src="app.js"></script>
+</body>
+</html>
